@@ -1,0 +1,521 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!-- ================================
+Start SEO blocks
+================================= -->
+{% block title %}{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+<!-- ================================
+END SEO blocks
+================================= -->
+
+<!-- ================================
+Start CSS blocks
+================================= -->
+{% block extend_header %}{% endblock %}
+<!-- ================================
+END CSS blocks
+================================= -->
+
+<!-- ================================
+Start script blocks
+================================= -->
+{% block extend_footer %}{% endblock %}
+<!-- ================================
+END script blocks
+================================= -->
+
+<!-- ================================
+Start Content
+================================= -->
+{% block content %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curves, Waves, and Blobs</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;400;900&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
+
+    <style>
+      h1 {
+        font-size: 4rem;
+      }
+      p {
+        font-size: 1.5rem;
+      }
+      body {
+        margin: 0;
+        font-family: 'Prompt', sans-serif;
+        color: white;
+        background: #202731;
+        overflow-x: hidden;
+      }
+
+      section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 400px;
+        padding-top: 100px;
+      }
+
+      .blue {
+        background: #3c31dd;
+      }
+
+      .red {
+        background: #dd3f31;
+      }
+
+      .pink {
+        background: #ff0066;
+        overflow: hidden;
+      }
+
+      .dark {
+        background: #0f0f10;
+      }
+
+      /* Curved bg with plain CSS */
+
+      .curve {
+        position: absolute;
+        height: 250px;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+      }
+
+      .curve::before {
+        content: '';
+        display: block;
+        position: absolute;
+        border-radius: 100% 50%;
+        width: 55%;
+        height: 100%;
+        transform: translate(85%, 60%);
+        background-color: hsl(216, 21%, 16%);
+      }
+
+      .curve::after {
+        content: '';
+        display: block;
+        position: absolute;
+        border-radius: 100% 50%;
+        width: 55%;
+        height: 100%;
+        background-color: #3c31dd;
+        transform: translate(-4%, 40%);
+        z-index: -1;
+      }
+
+      /* Bubble bg with plain CSS */
+
+      .bubble::after {
+        content: '';
+        border-top-left-radius: 50% 100%;
+        border-top-right-radius: 50% 100%;
+        position: absolute;
+        bottom: 0;
+        z-index: -1;
+        width: 100%;
+        background-color: #0f0f10;
+        height: 85%;
+      }
+
+      /* Curved bg with SVG via https://www.shapedivider.app/ */
+
+      .wave {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+      }
+
+      .wave svg {
+        position: relative;
+        display: block;
+        width: calc(103% + 1.3px);
+        height: 262px;
+      }
+
+      .wave .shape-fill {
+        fill: hsl(240, 3%, 6%);
+      }
+
+      /* SVG background image via https://haikei.app/ */
+
+      .spacer {
+        aspect-ratio: 960/300;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      .layer1 {
+        background-image: url('./layer1.svg');
+      }
+      .layer2 {
+        background-image: url('./layer2.svg');
+      }
+
+      .flip {
+        transform: rotate(180deg);
+      }
+
+      /* Blobs SVG background image via https://haikei.app/ */
+
+      .blob-motion {
+        position: absolute;
+        transform: translateY(-20%);
+        z-index: 0;
+      }
+
+      .blob-content {
+        z-index: 1;
+      }
+
+      .blobs {
+        width: 100%;
+        background: url('./blobs.svg') no-repeat bottom / cover;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="blue">
+      <h1>Welcome !</h1>
+      <div class="curve"></div>
+
+    </section>
+
+    <section>
+      <div class="bannerSection">
+        <div class="container">
+          <div class="row g-4 g-md-3  align-items-center">
+            <div class="col-md-auto order-md-last">
+              <div class="bannerUserImg">
+                <img src="{{me.userprofile.avatar.url}}" alt="{{me.first_name|title}} {{me.last_name|title}} avatar">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="bannerContent">
+                <h1 class="xlTitle pb-3">Hi, I’m {{me.first_name|title}}, <br> a {{me.userprofile.title}} </br></h1>
+                <p>{{me.userprofile.bio}}</p>
+                <div class="bannerBtnCol">
+                  <div class="row">
+                    <div class="col-auto">
+                      <a download href="{{me.userprofile.cv.url}}" class="btn btnPrimary">Download Resume</a>
+                    </div>
+                    <div class="col-auto">
+                      <a href="{% url 'main:contact' %}" class="btn btnPrimary">Contact</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bubble">
+      <div class="sectionSpace pt-0">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-auto">
+              <div class="keySkillCol">
+                <h4 class="smTitle pb-3">Key Skills</h4>
+                {% for sk in me.userprofile.skills.all %}
+                {% if sk.is_key_skill %}
+                <div class="keySkillCard">
+                  {% if sk.image %}
+                  <div class="ksIconCol">
+                    <img src="{{sk.image.url}}" alt="...">
+                  </div>
+                  {% endif %}
+                  <span class="ksText">{{sk.name}}</span>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-md">
+              <h4 class="smTitle pb-3">Skill Level</h4>
+              <div class="progressCol">
+                <div class="progressCard">
+                  {% for sk in me.userprofile.skills.all %}
+                  {% if sk.is_key_skill %}
+                  <div class="progressCol">
+                    <span class="progressLbl">{{sk.name}}</span>
+                    <div class="row g-2 align-items-center">
+                      <div class="col">
+                        <div class="progress progressStyle">
+                          <div class="progress-bar" role="progressbar" style="width: {{sk.score}}%" aria-valuenow="{{sk.score}}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <span class="pLbl">{{sk.score}}%</span>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark">
+      <div>
+        <h1>Technical skills</h1>
+        <ol>
+          <li>Proficiency and experience in Python</li>
+          <li>Proficiency and experience in Django</li>
+          <li>Experienced with Ajax</li>
+          <li>Experience with Virtual Box</li>
+          <li>Solid understanding of Kubernetes , minikube and docker</li>
+          <li>Understanding of database concepts and experience with a database management system, such as MySQL or MongoDB</li>
+          <li>Experience with testing and debugging code</li>
+          <li>Knowledge of computer science fundamentals, such as data structures and algorithms</li>
+          <li>Strong knowledge of React Native</li>
+          <li>Familiarity with database systems such as MySQL, MongoDB, and Oracle</li>
+          <li>Experience with version control systems such as Git</li>
+          <li>Ability to work independently and in a team</li>
+          <li>Experience with agile development methodologies</li>
+          <li>Familiarity with cloud platforms such as AWS, googleCloud and Azure</li>
+          <li>Proficiency with front-end technologies such as HTML, CSS, and JavaScript</li>
+          <li>I am intermediate C programmer.</li>
+          <li>Proficiency Visual Basic .NET</li>
+          <li>Proficiency MacOS</li>
+          <li>Proficienct with Z-shell terminal</li>
+        </ol>
+        <div>      
+          <h1>Other skills</h1>
+          <ol>
+            <li>communication skills</li>
+            <li>Sales experience</li>
+            <li>Customer Relations </li>
+            <li>Welding</li>
+            <li>Fitting and Turning</li>
+            <li>I have worked in high pressure in enviroments</li>
+            <li>Leadership experience aswell as management experience</li>
+            <li>Passion for Teaching </li>
+            <li>I have competed in high level sport</li>
+            <li>Bs.c Information Technologie</li>
+          </ol>               
+        </div>
+        <div>      
+          <h1>Job Experience</h1>
+          <ol>
+            <div>
+            <li>Boiler Maker</li>
+            </div>
+            <div>
+            <li>Personal Trainer</li>
+            </div>
+            <div>
+            <li>Receptionist</li>
+            </div>
+            <div>
+            <li>Property management</li>
+            </div>
+            <div>
+              <li>Full-stack Junoir Software Developer</li>
+            </div>
+          </ol>               
+        </div>
+    </section>
+
+    <section class="red">
+      <div class="sectionSpace">
+        <div class="container">
+          <div class="portfolioCol">
+            <div class="row pb-3">
+              <div class="col">
+                <h4 class="smText regular">Featured Work</h4>
+              </div>
+              <div class="col-auto">
+                <a href="{% url 'main:portfolios' %}" class="simpleLink">View all</a>
+              </div>
+            </div>
+            {% for p in portfolio %}
+            {% if p.is_active %}
+            <div class="portfolioCard">
+              <div class="row g-4 align-items-center">
+                <div class="col-md-auto">
+                  <div class="portfolioImgCol">
+                    <a href="{% url 'main:portfolio' slug=p.slug %}"><img src="{{p.image.url}}" alt="..."></a>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="portfolioContentCol">
+                    <h4 class="lgTitle"><a href="{% url 'main:portfolio' slug=p.slug %}">{{p.name}}</a></h4>
+                    <ul class="portfolioOption">
+                      <li><span class="dateLbl">{{p.date.year}}</span></li>
+                    </ul>
+                    <p>{{p.description}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            
+          </div>
+          <div class="testimonialCol">
+            <h4 class="smText regular d-block">Testimonials</h4>
+            <div class="testimonialSlider">
+              <div class="swiper testimonialSwiper">
+                <div class="swiper-wrapper">
+                  {% for t in testimonials %}
+                  {% if t.is_active %}
+                  <div class="swiper-slide">
+                    <div class="testimonialCard">
+                      <div class="row align-items-center">
+                        <div class="col-sm-auto">
+                          <div class="tImgCol">
+                            <img src="{{t.thumbnail.url}}" alt="...">
+                          </div>
+                        </div>
+                        <div class="col-sm">
+                          <div class="tContentCol">
+                            <h4 class="xsTitle bold">{{t.name}} - {{t.role}}</h4>
+                            <p>{{t.quote}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+    
+                </div>
+                <div class="test-swiper-button-next swiper-button-next swiperBtnStyle"></div>
+                <div class="test-swiper-button-prev swiper-button-prev swiperBtnStyle"></div>
+              </div>
+    
+    
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wave">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            class="shape-fill"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <div class="spacer layer1"></div>
+
+    <section>
+      <h1>Certificates</h1>
+      <div class="sectionSpaceSm darkBg">
+        <div class="container">
+          <div class="row pb-3">
+            <div class="col">
+            </div>
+    
+          </div>
+          <div class="sliderOuter">
+            <div class="swiper certificatesSlider">
+              <div class="swiper-wrapper">
+                {% for c in certificates %}
+                {% if c.is_active %}
+                <div class="swiper-slide">
+                  <div class="cardStyle2">
+                    <h4 class="mdTitle cs1Title">
+                      <a href="javascript:void(0)">{{c.title}}</a>
+                    </h4>
+                    <ul class="cardOptionCol">
+                      <li>{{c.date.date}}</li>
+                      <li>{{c.name|title}}</li>
+                    </ul>
+                    <p>{{c.description}}</p>
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                
+              </div>
+            </div>            
+            <div class="cert-swiper-button-next swiper-button-next swiperBtnStyle"></div>
+            <div class="cert-swiper-button-prev swiper-button-prev swiperBtnStyle"></div>
+            <div class="swiper-pagination swiperPaginationStyle posInitial"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+
+    <section class="pink">
+      <div class="blob-content">
+        <h1>Here is a link to my GitHub </h1>
+        <a href="https://github.com/JHarty404" target="_blank">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" alt="GitHub icon" height="200" width="200">
+        </a>
+        
+      </div>
+
+      <svg
+        class="blob-motion"
+        id="visual"
+        viewBox="0 0 960 540"
+        width="960"
+        height="540"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+      >
+        <g transform="translate(450.7256843113689 283.4942824330989)">
+          <path
+            id="blob1"
+            d="M148.7 -134.9C193.7 -103.7 231.9 -51.9 232.4 0.6C233 53 196.1 106.1 151.1 128.6C106.1 151.1 53 143 -4.4 147.4C-61.8 151.8 -123.5 168.5 -151.2 146C-178.8 123.5 -172.4 61.8 -172.8 -0.4C-173.1 -62.5 -180.3 -124.9 -152.6 -156.1C-124.9 -187.3 -62.5 -187.1 -5.3 -181.8C51.9 -176.5 103.7 -166 148.7 -134.9"
+            fill="#BB004B"
+          ></path>
+        </g>
+        <g transform="translate(509.54377535978017 281.49390864595887)" style="visibility: hidden">
+          <path
+            id="blob2"
+            d="M115.4 -137.9C137.9 -92.9 136.4 -46.4 133.6 -2.8C130.8 40.8 126.6 81.6 104.1 118.4C81.6 155.2 40.8 188.1 -8.4 196.5C-57.5 204.8 -115 188.7 -151 151.9C-187 115 -201.5 57.5 -190.8 10.7C-180.1 -36.1 -144.1 -72.1 -108.1 -117.1C-72.1 -162.1 -36.1 -216.1 5.2 -221.2C46.4 -226.4 92.9 -182.9 115.4 -137.9"
+            fill="#BB004B"
+          ></path>
+        </g>
+      </svg>
+
+      <script>
+        const tween = KUTE.fromTo(
+          '#blob1',
+          { path: '#blob1' },
+          { path: '#blob2' },
+          { repeat: 999, duration: 3000, yoyo: true }
+        ).start();
+      </script>
+    </section>
+
+
+  </body>
+</html>
+{% endblock %}
